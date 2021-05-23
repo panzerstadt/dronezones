@@ -15,7 +15,7 @@ export const Searchbar: React.FC<Props> = ({ bgClass, onChange }) => {
           onChange={onChange}
           style={{ caretColor: "white" }}
           className={`w-full h-10 h-full p-2 font-light placeholder-gray-400 transition-colors rounded-lg outline-none focus:text-gray-50 focus:bg-gray-800 focus:placeholder-gray-300 active:rounded-lg ${bgClass}`}
-          placeholder="Search for dronezones"
+          placeholder="Search does not work yet"
         />
       </Container>
     </div>

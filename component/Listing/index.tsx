@@ -1,9 +1,15 @@
 import React from "react";
 import { useGoogleSheets } from "../ConnectDB/useGoogleSheets";
-import { Results } from "./Results";
+import { TWGrayColors } from "../Neumorphic/utils";
+import { OnClickWithLatLng, Results } from "./Results";
 import { Searchbar } from "./Searchbar";
 
-export const Listing = ({ bgClass }) => {
+interface Props {
+  bgClass: TWGrayColors;
+  onClick: ({ e, latlng }: OnClickWithLatLng) => void;
+}
+
+export const Listing: React.FC<Props> = ({ bgClass, onClick }) => {
   const data = useGoogleSheets();
 
   // TODO: search filters the data
@@ -14,7 +20,7 @@ export const Listing = ({ bgClass }) => {
         onChange={(e) => console.log(e.target.value)}
         bgClass={bgClass}
       />
-      <Results data={data} />
+      <Results data={data} onClick={onClick} />
     </div>
   );
 };

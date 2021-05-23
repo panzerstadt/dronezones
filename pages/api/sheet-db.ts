@@ -1,4 +1,5 @@
 import { GoogleSpreadsheet } from "google-spreadsheet";
+import { LatLng } from "../../component/Map/GoogleMap";
 
 type GSheetsKeys =
   | "Location"
@@ -6,7 +7,8 @@ type GSheetsKeys =
   | "google map address"
   | "Website URL"
   | "Entry Fee"
-  | "Drone Shooting Fee";
+  | "Drone Shooting Fee"
+  | "LatLng";
 
 export type DBKeys =
   | "name"
@@ -14,7 +16,8 @@ export type DBKeys =
   | "address"
   | "url"
   | "entryFee"
-  | "droneFee";
+  | "droneFee"
+  | "latlng";
 
 const headerToKey: { [key in GSheetsKeys]: DBKeys } = {
   Location: "name",
@@ -23,6 +26,16 @@ const headerToKey: { [key in GSheetsKeys]: DBKeys } = {
   "Website URL": "url",
   "Entry Fee": "entryFee",
   "Drone Shooting Fee": "droneFee",
+  LatLng: "latlng",
+};
+
+const splitLatLng = (latlngString: string): LatLng => {
+  const latlngArray = latlngString.split(",").map((s) => s.trim());
+
+  return {
+    lat: parseFloat(latlngArray[0]),
+    lng: parseFloat(latlngArray[1]),
+  };
 };
 
 export type DBData = { [key in DBKeys]: string };
@@ -31,12 +44,16 @@ const formatRows = (headers, rowInstance): DBData[] => {
 
   return Array.from(Array(rowLength)).map((_, i) => {
     return headers.reduce((acc, header) => {
-      const key = headerToKey[header];
+      const key = headerToKey[header] as DBKeys | null;
       if (!key) throw new Error("db key not found!");
 
+      let value = rowInstance[i][header];
+      if (key === "latlng") {
+        value = splitLatLng(value);
+      }
       return {
         ...acc,
-        [key]: rowInstance[i][header],
+        [key]: value,
       };
     }, {});
   });

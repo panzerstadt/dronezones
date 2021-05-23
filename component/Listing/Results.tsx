@@ -1,13 +1,18 @@
+import { MouseEvent } from "react";
 import { DBData } from "../../pages/api/sheet-db";
+import { LatLng } from "../Map/GoogleMap";
 
-const DUMMY_TEXT =
-  "orem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ip";
+export type OnClickWithLatLng = {
+  e: MouseEvent<HTMLDivElement>;
+  latlng: LatLng;
+};
 
 interface Props {
   data: DBData[];
+  onClick: ({ e, latlng }: OnClickWithLatLng) => void;
 }
 
-export const Results: React.FC<Props> = ({ data }) => {
+export const Results: React.FC<Props> = ({ data, onClick }) => {
   const Fee = ({ label, value }) => (
     <div>
       <span>{value}</span>
@@ -15,30 +20,52 @@ export const Results: React.FC<Props> = ({ data }) => {
     </div>
   );
   return (
-    <ul className="flex flex-col w-full px-4 divide-y-2 divide-gray-400">
+    <ul className="flex flex-col w-full px-4 overflow-y-auto divide-y divide-gray-300">
       {data.map((row) => {
         return (
           <li className="flex flex-col justify-center h-40 p-2 text-gray-700 hover:text-black">
-            <div className="cursor-default">
-              <h1 className="leading-none">{row.name}</h1>
-              <small className="leading-none">{row.altName}</small>
+            <div
+              id="clickable-area"
+              onClick={(e) =>
+                onClick({ e, latlng: row.latlng as unknown as LatLng })
+              }
+              className="cursor-pointer hover:text-purple-500"
+            >
+              <div>
+                <h1 className="mt-1 truncate" title={row.name}>
+                  {row.name}
+                </h1>
+                <small className="leading-none" title={row.altName}>
+                  {row.altName}
+                </small>
+              </div>
+
+              <div className="grid grid-cols-2 ">
+                <Fee label="drone fee" value={row.droneFee} />
+                <Fee label="entry fee" value={row.entryFee} />
+              </div>
             </div>
 
-            <div className="grid grid-cols-2 cursor-default">
-              <Fee label="drone fee" value={row.droneFee} />
-              <Fee label="entry fee" value={row.entryFee} />
-            </div>
-
-            <p className="overflow-hidden text-xs font-light max-h-28 ">
+            {/* TODO: add copy function */}
+            <p
+              className="overflow-hidden text-xs font-light max-h-28"
+              title={row.address}
+            >
               {row.address}
             </p>
+
             <a
-              className="mt-2 text-xs text-right text-gray-500 hover:text-blue-600"
+              className={`
+              mt-2 
+              text-xs text-right text-gray-500 hover:text-blue-500 
+              ${!row.url ? "pointer-events-none" : ""}
+              `}
               href={row.url}
               target="__blank"
               rel="noreferrer noopener"
+              aria-disabled={!row.url}
             >
-              go to website
+              {row.url ? "go to website" : "no website"}
             </a>
           </li>
         );

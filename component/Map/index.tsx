@@ -1,8 +1,13 @@
 import React from "react";
 import { Container } from "../Neumorphic/Container";
-import { GMap } from "./GoogleMap";
+import { TWGrayColors } from "../Neumorphic/utils";
+import { GMap, LatLng } from "./GoogleMap";
 
-export const Map = ({ bgClass }) => {
+interface Props {
+  bgClass: TWGrayColors;
+  latlng?: LatLng;
+}
+export const Map: React.FC<Props> = ({ bgClass, latlng }) => {
   return (
     <div className="flex items-center w-full h-full p-6">
       <Container
@@ -12,7 +17,7 @@ export const Map = ({ bgClass }) => {
         bgColor={bgClass}
         roundedClass="rounded-2xl"
       >
-        <GMap />
+        <GMap latlng={latlng} />
       </Container>
     </div>
   );
