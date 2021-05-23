@@ -9,7 +9,7 @@ interface Props {
 
 export const Searchbar: React.FC<Props> = ({ bgClass, onChange }) => {
   return (
-    <div className="w-full px-4 pt-10 pb-6 ">
+    <div className="w-full px-4 pt-10 pb-4 ">
       <Container distance={8} bgColor={bgClass} roundedClass="rounded-lg">
         <input
           onChange={onChange}

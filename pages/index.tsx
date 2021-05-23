@@ -1,9 +1,6 @@
 import React from "react";
 import Head from "next/head";
 import { TWGrayColors } from "../component/Neumorphic/utils";
-import { Searchbar } from "../component/Listing/Searchbar";
-import { Results } from "../component/Listing/Results";
-import { SheetsDB } from "../component/ConnectDB/sheets";
 import { Map } from "../component/Map";
 import { Listing } from "../component/Listing";
 
@@ -23,8 +20,6 @@ const Home = () => {
       <main className="flex flex-col h-full gap-2 sm:flex-row">
         <Map bgClass={bgClass} />
         <Listing bgClass={bgClass} />
-
-        <SheetsDB />
       </main>
     </div>
   );

@@ -6,6 +6,9 @@ module.exports = {
       minWidth: {
         listing: 300,
       },
+      fontSize: {
+        xxs: ".5rem",
+      },
     },
     fontFamily: {
       sans: "Poppins, ui-sans-serif, sans-serif",
