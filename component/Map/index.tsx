@@ -4,9 +4,9 @@ import { GMap } from "./GoogleMap";
 
 export const Map = ({ bgClass }) => {
   return (
-    <div className="flex items-center w-full h-full p-8">
+    <div className="flex items-center w-full h-full p-6">
       <Container
-        distance={12}
+        distance={5}
         bordered
         inset
         bgColor={bgClass}

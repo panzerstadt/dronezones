@@ -5,6 +5,7 @@ import { Searchbar } from "../component/Listing/Searchbar";
 import { Results } from "../component/Listing/Results";
 import { SheetsDB } from "../component/ConnectDB/sheets";
 import { Map } from "../component/Map";
+import { Listing } from "../component/Listing";
 
 const Home = () => {
   const bgClass: TWGrayColors = "bg-gray-200";
@@ -19,15 +20,11 @@ const Home = () => {
           rel="stylesheet"
         />
       </Head>
-      <main className="flex flex-col h-full gap-4 sm:flex-row">
+      <main className="flex flex-col h-full gap-2 sm:flex-row">
         <Map bgClass={bgClass} />
+        <Listing bgClass={bgClass} />
 
-        <div className="flex flex-col items-center h-full pr-4 sm:w-1/4 min-w-listing">
-          <Searchbar bgClass={bgClass} />
-          <Results />
-
-          <SheetsDB />
-        </div>
+        <SheetsDB />
       </main>
     </div>
   );
